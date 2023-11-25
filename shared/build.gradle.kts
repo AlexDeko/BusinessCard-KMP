@@ -1,21 +1,8 @@
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.kotlinCocoapods)
-    alias(libs.plugins.androidLibrary)
+    id("kotlin.multiplatform")
 }
 
 kotlin {
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
-    }
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
-
     cocoapods {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
@@ -27,21 +14,12 @@ kotlin {
             isStatic = true
         }
     }
-    
-    sourceSets {
-        commonMain.dependencies {
-            //put your multiplatform dependencies here
-        }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-        }
-    }
+}
+
+dependencies {
+    commonTestImplementation(libs.kotlin.test)
 }
 
 android {
     namespace = "com.card.business"
-    compileSdk = 34
-    defaultConfig {
-        minSdk = 28
-    }
 }
