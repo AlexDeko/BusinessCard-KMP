@@ -1,0 +1,16 @@
+*.iml
+.gradle
+.idea
+.DS_Store
+build
+captures
+.externalNativeBuild
+.cxx
+local.properties
+xcuserdata
+prebuilds/fullsdk-linux
+prebuilds/fullsdk-darwin
+out
+/local.properties
+/captures
+yarn.lock
