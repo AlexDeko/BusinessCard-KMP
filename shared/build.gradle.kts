@@ -1,5 +1,15 @@
 plugins {
     id("kotlin.multiplatform")
+    alias(libs.plugins.sqlDelight)
+    kotlin("plugin.serialization") version "1.9.10"
+}
+
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("card.business")
+        }
+    }
 }
 
 kotlin {
@@ -16,10 +26,34 @@ kotlin {
     }
 }
 
-dependencies {
-    commonTestImplementation(libs.kotlin.test)
-}
-
 android {
     namespace = "com.card.business"
+
+    sourceSets {
+        val iosMain by creating {
+            dependsOn(commonMain)
+            dependencies {
+                implementation(libs.native.driver)
+                implementation(libs.ktor.client.darwin)
+            }
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
+        }
+    }
+}
+
+dependencies {
+    implementation(libs.androidx.core.ktx)
+
+    commonMainImplementation(libs.kotlinx.coroutines.core)
+    commonMainImplementation(libs.ktor.client.core)
+    commonMainImplementation(libs.ktor.client.content.negotiation)
+    commonMainImplementation(libs.ktor.serialization.kotlinx.json)
+    commonMainImplementation(libs.sqldelight.coroutines.extensions)
+
+    androidMainImplementation(libs.android.driver)
+    androidMainImplementation(libs.ktor.client.android)
+
+    commonTestImplementation(libs.kotlin.test)
 }
