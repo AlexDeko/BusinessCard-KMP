@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.sqlDelight)
     kotlin("plugin.serialization") version "1.9.10"
 }
-
 sqldelight {
     databases {
         create("Database") {
@@ -13,23 +12,26 @@ sqldelight {
 }
 
 kotlin {
-    cocoapods {
-        summary = "Some description for the Shared Module"
-        homepage = "Link to the Shared Module homepage"
-        version = "1.0"
-        ios.deploymentTarget = "16.0"
-        podfile = project.file("../iosApp/Podfile")
-        framework {
-            baseName = "shared"
-            isStatic = true
-        }
-    }
-}
-
-android {
-    namespace = "com.card.business"
-
     sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(libs.sqldelight.coroutines.extensions)
+            }
+        }
+
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.android.driver)
+                implementation(libs.ktor.client.android)
+            }
+        }
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependsOn(commonMain)
             dependencies {
@@ -40,20 +42,18 @@ android {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
         }
+        val commonTest by getting {
+            dependencies {
+                implementation(libs.kotlin.test)
+            }
+        }
     }
+}
+
+android {
+    namespace = "com.card.business"
 }
 
 dependencies {
     implementation(libs.androidx.core.ktx)
-
-    commonMainImplementation(libs.kotlinx.coroutines.core)
-    commonMainImplementation(libs.ktor.client.core)
-    commonMainImplementation(libs.ktor.client.content.negotiation)
-    commonMainImplementation(libs.ktor.serialization.kotlinx.json)
-    commonMainImplementation(libs.sqldelight.coroutines.extensions)
-
-    androidMainImplementation(libs.android.driver)
-    androidMainImplementation(libs.ktor.client.android)
-
-    commonTestImplementation(libs.kotlin.test)
 }
