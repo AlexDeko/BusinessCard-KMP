@@ -1,0 +1,1 @@
+const val DATABASE_NAME = "business_card_database.db"
