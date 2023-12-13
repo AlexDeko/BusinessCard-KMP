@@ -1,16 +1,16 @@
 PODS:
-  - shared (1.0)
+  - bridge (1.0.0)
 
 DEPENDENCIES:
-  - shared (from `../shared`)
+  - bridge (from `../shared/bridge`)
 
 EXTERNAL SOURCES:
-  shared:
-    :path: "../shared"
+  bridge:
+    :path: "../shared/bridge"
 
 SPEC CHECKSUMS:
-  shared: c133c49697085ba65e4031b78e671fc97617a40d
+  bridge: 013e37201e262388f621f3e6c1202d9ae17ce279
 
-PODFILE CHECKSUM: 78d6cc1b71b232202c48a29d4e6c34972c534c73
+PODFILE CHECKSUM: 0b43c46f5f4105ab20a992f01b19044efe3acc0a
 
 COCOAPODS: 1.12.1
