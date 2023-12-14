@@ -8,6 +8,7 @@ kotlin {
             dependencies {
                 api(project(":shared:features:employees:api"))
                 api(project(":shared:core"))
+                implementation(libs.kviewmodel)
             }
         }
     }
