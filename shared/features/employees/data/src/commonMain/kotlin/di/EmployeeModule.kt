@@ -9,6 +9,8 @@ import repositories.EmployeeRepository
 import repositories.EmployeeRepositoryImpl
 import sqldelight.EmployeesSqlDelightStorage
 import storages.EmployeesStorage
+import usecases.FetchEmployees
+import usecases.ListenEmployees
 
 val employeesModule = module {
     singleOf(::EmployeesKtorApi) { bind<EmployeesApi>() }
@@ -16,4 +18,8 @@ val employeesModule = module {
     singleOf(::EmployeesSqlDelightStorage) { bind<EmployeesStorage>() }
 
     singleOf(::EmployeeRepositoryImpl) { bind<EmployeeRepository>() }
+
+    singleOf(::FetchEmployees)
+
+    singleOf(::ListenEmployees)
 }

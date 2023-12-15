@@ -23,15 +23,19 @@ kotlin {
                 implementation(libs.ktor.client.content.negotiation)
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(libs.sqldelight.coroutines.extensions)
+
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
+                implementation(libs.moko.mvvm.compose)
+                implementation(libs.moko.mvvm.compose.flow)
             }
         }
 
         androidMain {
+            dependsOn(commonMain)
             dependencies {
                 implementation(libs.android.driver)
                 implementation(libs.ktor.client.android)
@@ -40,7 +44,9 @@ kotlin {
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
+
         val iosMain by creating {
+            dependsOn(commonMain)
             dependencies {
                 implementation(libs.native.driver)
                 implementation(libs.ktor.client.darwin)

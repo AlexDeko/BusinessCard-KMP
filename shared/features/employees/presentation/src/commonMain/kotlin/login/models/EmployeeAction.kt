@@ -1,5 +1,7 @@
 package login.models
 
 sealed class EmployeeAction {
-    data object ShowMessage : EmployeeAction()
+    data class ShowMessage(
+        val employeeId: Long
+    ) : EmployeeAction()
 }
