@@ -29,10 +29,13 @@ kotlin {
                 implementation(compose.material)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
+                implementation(libs.moko.mvvm.compose)
+                implementation(libs.moko.mvvm.compose.flow)
             }
         }
 
         androidMain {
+            dependsOn(commonMain)
             dependencies {
                 implementation(libs.android.driver)
                 implementation(libs.ktor.client.android)
@@ -43,6 +46,7 @@ kotlin {
         val iosSimulatorArm64Main by getting
 
         val iosMain by creating {
+            dependsOn(commonMain)
             dependencies {
                 implementation(libs.native.driver)
                 implementation(libs.ktor.client.darwin)
