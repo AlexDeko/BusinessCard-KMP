@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-
 /**
  * State - сотояние экрана; которое обновляется после события [Event]
  *  1) Ввели текст в поле ввода
@@ -27,8 +26,11 @@ import kotlinx.coroutines.flow.asStateFlow
  * State и Action разделены, чтобы рекомпозиция была эффективнее
  * И разделить отрисовку экрана и навгицию
  *
+ * В composable function мы подписываемя на [states]  и [actions]
  */
-abstract class BaseViewModel<State : Any, Action, Event>(initialState: State) : ViewModel() {
+abstract class BaseViewModel<State : Any, Action, Event>(
+    initialState: State
+) : ViewModel() {
 
     private val mutableStates = MutableStateFlow(initialState)
 
@@ -37,15 +39,24 @@ abstract class BaseViewModel<State : Any, Action, Event>(initialState: State) : 
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
 
+    private val mutableEvents = MutableSharedFlow<Event>(
+        replay = 0,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+
+
     val states = mutableStates.asStateFlow()
 
+    val currentState get() = states.value
+
     val actions = mutableActions.asSharedFlow()
+
+    abstract fun obtainEvent(event: Event)
+
+
+    protected fun pushAction(action: Action) = mutableActions.tryEmit(action)
 
     protected fun pushState(state: State) {
         mutableStates.value = state
     }
-
-    protected fun pushAction(action: Action) = mutableActions.tryEmit(action)
-
-    abstract fun obtainEvent(event: Event)
 }

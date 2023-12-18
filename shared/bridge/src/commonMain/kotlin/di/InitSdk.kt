@@ -9,9 +9,6 @@ object InitSdk {
             single {
                 configuration
             }
-            single {
-
-            }
         }
 
         initKoin(
