@@ -17,22 +17,56 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun MyApplicationTheme(
+    customTheme: BusinessCardAppTheme,
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
-        darkColorScheme(
-            primary = Color(0xFFBB86FC),
-            secondary = Color(0xFF03DAC5),
-            tertiary = Color(0xFF3700B3)
-        )
-    } else {
-        lightColorScheme(
-            primary = Color(0xFF6200EE),
-            secondary = Color(0xFF03DAC5),
-            tertiary = Color(0xFF3700B3)
-        )
+//    val colors = if (darkTheme) {
+//        darkColorScheme(
+//            primary = Color(0xFFBB86FC),
+//            secondary = Color(0xFF03DAC5),
+//            tertiary = Color(0xFF3700B3)
+//        )
+//    } else {
+//        lightColorScheme(
+//            primary = Color(0xFF6200EE),
+//            secondary = Color(0xFF03DAC5),
+//            tertiary = Color(0xFF3700B3)
+//        )
+//    }
+
+    val colors = when (customTheme) {
+        is BusinessCardAppTheme.ChristmasTheme -> {
+            lightColorScheme(
+                primary = Color(0xFFEE0010),
+                secondary = Color(0xFFFF9407),
+                tertiary = Color(0xFF020007)
+            )
+        }
+        is BusinessCardAppTheme.LightTheme -> {
+            lightColorScheme(
+                primary = Color(0xFF6200EE),
+                secondary = Color(0xFF03DAC5),
+                tertiary = Color(0xFF3700B3)
+            )
+        }
+        is BusinessCardAppTheme.DarkTheme -> {
+            darkColorScheme(
+                primary = Color(0xFFBB86FC),
+                secondary = Color(0xFF03DAC5),
+                tertiary = Color(0xFF3700B3)
+            )
+        }
+        is BusinessCardAppTheme.RentateamTheme -> {
+            lightColorScheme(
+                primary = Color(0xFF0A1D86),
+                onPrimary = Color(0xFFF6FBFA),
+                tertiary = Color(0xFF0C0C0C),
+                primaryContainer = Color(0xFFE9DCEB)
+            )
+        }
     }
+
     val typography = Typography(
         bodyMedium = TextStyle(
             fontFamily = FontFamily.Default,
@@ -52,4 +86,11 @@ fun MyApplicationTheme(
         shapes = shapes,
         content = content
     )
+}
+
+sealed class BusinessCardAppTheme {
+    data object DarkTheme : BusinessCardAppTheme()
+    data object ChristmasTheme: BusinessCardAppTheme()
+    data object LightTheme: BusinessCardAppTheme()
+    data object RentateamTheme: BusinessCardAppTheme()
 }
