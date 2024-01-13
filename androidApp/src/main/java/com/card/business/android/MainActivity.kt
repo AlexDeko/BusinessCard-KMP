@@ -25,8 +25,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.card.business.domain.models.Employee
-import com.card.business.domain.models.Job
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,10 +52,10 @@ fun EmployeeListScreen(
     var expandedCardIndex by remember { mutableStateOf(-1) }
 
     val employees = listOf(
-        Employee(1, "John", "Doe", Job.DEVELOPER),
-        Employee(2, "Jane", "Smith", Job.PROJECT_MANAGER),
-        Employee(3, "Bill", "Cipher", Job.QA),
-        Employee(4, "Santa", "Claus", Job.CEO),
+        Employee(1, "John", "Doe", JobEnum.DEVELOPER),
+        Employee(2, "Jane", "Smith", JobEnum.PROJECT_MANAGER),
+        Employee(3, "Bill", "Cipher", JobEnum.QA),
+        Employee(4, "Santa", "Claus", JobEnum.CEO),
     )
 
 //    val employees = remember { employeeRepository.listenEmployees() }
@@ -162,11 +160,25 @@ fun EmployeeCard(employee: Employee, isExpanded: Boolean, onCardClick: () -> Uni
             if (isExpanded) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = employee.job.toString(),
+                    text = employee.position.toString(),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.tertiary
                 )
             }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun EmployeesListPreview() {
+    MyApplicationTheme(customTheme = BusinessCardAppTheme.RentateamTheme) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.primary
+        ) {
+            EmployeeListScreen()
         }
     }
 }
@@ -182,4 +194,15 @@ fun DefaultPreview() {
     MyApplicationTheme(customTheme = BusinessCardAppTheme.ChristmasTheme) {
         GreetingView("Hello, Android!")
     }
+}
+
+data class Employee(
+    val id: Int,
+    val firstName: String,
+    val lastName: String,
+    val position: JobEnum
+)
+
+enum class JobEnum {
+    DEVELOPER, QA, PROJECT_MANAGER, CEO
 }
