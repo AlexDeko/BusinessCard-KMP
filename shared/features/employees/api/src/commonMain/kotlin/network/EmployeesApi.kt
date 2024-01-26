@@ -5,5 +5,5 @@ import dto.EmployeeDtoWrapper
 
 interface EmployeesApi {
 
-    suspend fun fetchEmployees(): List<EmployeeDto>
+    suspend fun fetchEmployees(): EmployeeDtoWrapper
 }
