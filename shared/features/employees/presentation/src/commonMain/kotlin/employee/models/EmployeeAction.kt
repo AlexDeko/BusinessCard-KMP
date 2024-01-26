@@ -1,4 +1,4 @@
-package login.models
+package employee.models
 
 sealed class EmployeeAction {
     data class ShowMessage(

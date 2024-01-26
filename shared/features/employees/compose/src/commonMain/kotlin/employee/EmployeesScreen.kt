@@ -1,11 +1,7 @@
-package login
+package employee
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import coroutines.Dispatchers
-import dev.icerock.moko.mvvm.compose.viewModelFactory
-import extensions.collectAsStateMultiPlatform
-import org.koin.compose.getKoin
 import org.koin.compose.koinInject
 import view_model.State
 import widget.ErrorView
@@ -13,7 +9,7 @@ import widget.LoadingView
 
 @Composable
 fun EmployeeListScreen(
-    viewModel: EmployeeViewModel = koinInject()
+    viewModel: EmployeeListViewModel = koinInject()
 ) {
 
     when (val state = viewModel.states.collectAsState().value) {

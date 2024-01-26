@@ -39,9 +39,9 @@ internal val ktorModule = module {
                 requestTimeoutMillis = 30_000
             }
 
-            /*defaultRequest {
+            defaultRequest {
                 header("Content-Type", "application/json; charset=UTF-8")
-            }*/
+            }
         }
     }
 }

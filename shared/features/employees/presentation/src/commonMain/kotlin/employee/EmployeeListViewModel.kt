@@ -1,12 +1,12 @@
-package login
+package employee
 
 import coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import login.models.EmployeeAction
-import login.models.EmployeeEvent
+import employee.models.EmployeeAction
+import employee.models.EmployeeEvent
 import models.Employee
 import usecases.FetchEmployees
 import usecases.ListenEmployees
@@ -14,7 +14,7 @@ import view_model.BaseViewModel
 import view_model.State
 
 
-class EmployeeViewModel(
+class EmployeeListViewModel(
     private val dispatchers: Dispatchers,
     private val listenEmployees: ListenEmployees,
     private val fetchEmployees: FetchEmployees

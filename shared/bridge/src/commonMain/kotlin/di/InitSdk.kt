@@ -1,7 +1,7 @@
 package di
 
 import PlatformConfiguration
-import login.employeesModule
+import employee.employeesModule
 import org.koin.dsl.module
 
 object InitSdk {

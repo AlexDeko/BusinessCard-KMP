@@ -1,4 +1,4 @@
-package login
+package employee
 
 import coroutines.Dispatchers
 import dev.icerock.moko.mvvm.compose.viewModelFactory
@@ -28,7 +28,7 @@ val employeesModule = module {
 
     single {
         viewModelFactory {
-            EmployeeViewModel(dispatchers = Dispatchers, listenEmployees = get(), fetchEmployees = get())
+            EmployeeListViewModel(dispatchers = Dispatchers, listenEmployees = get(), fetchEmployees = get())
         }.createViewModel()
 
     }
