@@ -14,6 +14,13 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.4"
+    }
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
@@ -23,6 +30,9 @@ android {
 
 dependencies {
     implementation(project(":shared:core"))
+    implementation(project(":shared:core-compose"))
     implementation(project(":shared:bridge"))
+    implementation(libs.androidx.activity.compose)
+    implementation(project(":shared:features:employees:compose"))
     implementation(libs.androidx.appcompat)
 }

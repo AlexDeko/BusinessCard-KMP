@@ -1,23 +1,25 @@
 package login
 
 import coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import login.models.EmployeeAction
 import login.models.EmployeeEvent
-import login.models.EmployeeState
+import models.Employee
 import usecases.FetchEmployees
 import usecases.ListenEmployees
 import view_model.BaseViewModel
+import view_model.State
 
 
-class LoginViewModel(
+class EmployeeViewModel(
     private val dispatchers: Dispatchers,
     private val listenEmployees: ListenEmployees,
     private val fetchEmployees: FetchEmployees
-) : BaseViewModel<EmployeeState, EmployeeAction, EmployeeEvent>(
-    initialState = EmployeeState()
+) : BaseViewModel<State<List<Employee>>, EmployeeAction, EmployeeEvent>(
+    initialState = State.Loading
 ) {
 
     init {
@@ -28,10 +30,13 @@ class LoginViewModel(
 
             listenEmployees()
                 .flowOn(dispatchers.IO)
+                .catch {
+                    pushState(State.Error(it))
+                }
                 .collect { employees ->
                     pushState(
-                        EmployeeState(
-                            employees = employees
+                        State.Success(
+                            data = employees
                         )
                     )
                 }

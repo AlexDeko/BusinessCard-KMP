@@ -8,7 +8,12 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":shared:core-compose"))
+                api(project(":shared:core-compose"))
+                api(project(":shared:features:employees:api"))
+                implementation(project(":shared:core-utils"))
+                api(project(":shared:core"))
+                implementation(libs.koin.compose)
+                api(project(":shared:features:employees:presentation"))
             }
         }
     }

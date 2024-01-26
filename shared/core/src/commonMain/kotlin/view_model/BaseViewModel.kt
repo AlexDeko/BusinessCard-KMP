@@ -49,3 +49,12 @@ abstract class BaseViewModel<State : Any, Action, Event>(initialState: State) : 
 
     abstract fun obtainEvent(event: Event)
 }
+
+sealed class State<out T> {
+
+    object Loading : State<Nothing>()
+
+    data class Error(val throwable: Throwable) : State<Nothing>()
+
+    data class Success<T>(val data: T) : State<T>()
+}

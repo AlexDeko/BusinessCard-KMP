@@ -1,6 +1,7 @@
 package di
 
 import PlatformConfiguration
+import login.employeesModule
 import org.koin.dsl.module
 
 object InitSdk {
@@ -8,9 +9,6 @@ object InitSdk {
         val initModule = module {
             single {
                 configuration
-            }
-            single {
-
             }
         }
 

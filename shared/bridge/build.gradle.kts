@@ -24,6 +24,8 @@ kotlin {
             dependencies {
                 implementation(project(":shared:core"))
                 implementation(project(":shared:features:employees:data"))
+                implementation(project(":shared:features:employees:presentation"))
+                api(project(":shared:core-compose"))
             }
         }
 

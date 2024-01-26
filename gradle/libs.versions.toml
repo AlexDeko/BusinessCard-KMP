@@ -1,4 +1,5 @@
 [versions]
+activityCompose = "1.8.2"
 agp = "8.1.1"
 appcompat = "1.6.1"
 coreKtx = "1.12.0"
@@ -6,25 +7,30 @@ kotlin = "1.9.20"
 compose = "1.5.4"
 compose-compiler = "1.5.4"
 compose-material3 = "1.1.2"
-androidx-activityCompose = "1.8.1"
 coroutinesVersion = "1.7.3"
 kotlinxSerializationJson = "1.6.0"
 ktorClientAndroid = "2.3.5"
 ktorVersion = "2.3.5"
 coroutinesExtensions = "2.0.0"
+lifecycleRuntimeCompose = "2.7.0"
 sqlDelight = "2.0.0"
 sqlDelightRuntime = "1.5.5"
 androidDriver = "2.0.0"
 nativeDriver = "2.0.0"
+koinCompose = "1.0.4"
 jetbrainsComposeVersion = "1.5.11"
 koin = "3.5.0"
 mokoVersion = "0.16.1"
 
+
+
 [libraries]
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koinCompose"}
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
-
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutinesVersion" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 

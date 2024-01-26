@@ -17,20 +17,19 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(libs.koin.core)
+                api(libs.koin.core)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.content.negotiation)
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(libs.sqldelight.coroutines.extensions)
-
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
-                implementation(libs.moko.mvvm.compose)
-                implementation(libs.moko.mvvm.compose.flow)
+                api(libs.moko.mvvm.compose)
+                api(libs.moko.mvvm.compose.flow)
             }
         }
 

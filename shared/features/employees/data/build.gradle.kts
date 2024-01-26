@@ -14,7 +14,7 @@ kotlin {
 
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.sqldelight.coroutines.extensions)
-                implementation(libs.ktor.client.core)
+                api(libs.ktor.client.core)
             }
         }
     }

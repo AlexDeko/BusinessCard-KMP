@@ -7,8 +7,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(project(":shared:features:employees:api"))
-                api(project(":shared:core"))
-                api(libs.koin.core)
+                implementation(project(":shared:core"))
+                implementation(project(":shared:features:employees:data"))
                 implementation(libs.kotlinx.coroutines.core)
             }
         }

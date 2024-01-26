@@ -1,5 +1,7 @@
-package di
+package login
 
+import coroutines.Dispatchers
+import dev.icerock.moko.mvvm.compose.viewModelFactory
 import ktor.EmployeesKtorApi
 import network.EmployeesApi
 import org.koin.core.module.dsl.bind
@@ -13,6 +15,7 @@ import usecases.FetchEmployees
 import usecases.ListenEmployees
 
 val employeesModule = module {
+
     singleOf(::EmployeesKtorApi) { bind<EmployeesApi>() }
 
     singleOf(::EmployeesSqlDelightStorage) { bind<EmployeesStorage>() }
@@ -22,4 +25,12 @@ val employeesModule = module {
     singleOf(::FetchEmployees)
 
     singleOf(::ListenEmployees)
+
+    single {
+        viewModelFactory {
+            EmployeeViewModel(dispatchers = Dispatchers, listenEmployees = get(), fetchEmployees = get())
+        }.createViewModel()
+
+    }
+
 }
