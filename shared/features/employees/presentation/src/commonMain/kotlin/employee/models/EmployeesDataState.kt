@@ -2,6 +2,6 @@ package employee.models
 
 import models.Employee
 
-data class EmployeeState(
+data class EmployeesDataState(
     val employees: List<Employee> = listOf()
 )

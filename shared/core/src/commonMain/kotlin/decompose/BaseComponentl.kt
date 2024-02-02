@@ -1,11 +1,15 @@
-package view_model
+package decompose
 
-import dev.icerock.moko.mvvm.viewmodel.ViewModel
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.essenty.lifecycle.doOnDestroy
+import coroutines.coroutineScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import org.koin.core.component.KoinComponent
 
 
 /**
@@ -28,7 +32,13 @@ import kotlinx.coroutines.flow.asStateFlow
  * И разделить отрисовку экрана и навгицию
  *
  */
-abstract class BaseViewModel<State : Any, Action, Event>(initialState: State) : ViewModel() {
+abstract class BaseComponent<SuccessState, Action, Event>(
+    componentContext: ComponentContext,
+    private val initialState: State<SuccessState>
+) : ComponentContext by componentContext, KoinComponent {
+
+
+    protected val componentScope = coroutineScope
 
     private val mutableStates = MutableStateFlow(initialState)
 
@@ -41,20 +51,26 @@ abstract class BaseViewModel<State : Any, Action, Event>(initialState: State) : 
 
     val actions = mutableActions.asSharedFlow()
 
-    protected fun pushState(state: State) {
+    protected fun pushState(state: State<SuccessState>) {
         mutableStates.value = state
     }
 
     protected fun pushAction(action: Action) = mutableActions.tryEmit(action)
 
     abstract fun obtainEvent(event: Event)
+
+    init {
+        lifecycle.doOnDestroy {
+            componentScope.cancel()
+        }
+    }
 }
 
-sealed class State<out T> {
+sealed interface State<out T> {
 
-    object Loading : State<Nothing>()
+    object Loading : State<Nothing>
 
-    data class Error(val throwable: Throwable) : State<Nothing>()
+    data class Error(val throwable: Throwable) : State<Nothing>
 
-    data class Success<T>(val data: T) : State<T>()
+    data class Success<T>(val data: T) : State<T>
 }

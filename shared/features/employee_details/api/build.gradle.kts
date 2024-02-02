@@ -1,17 +1,18 @@
 plugins {
     id("kotlin.multiplatform")
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 kotlin {
+
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
-                api(project(":shared:features:employees:api"))
                 implementation(project(":shared:core"))
-                implementation(project(":shared:features:employees:data"))
+
+                api(libs.koin.core)
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.decompose)
-                implementation(libs.koin.core)
+                implementation(libs.kotlinx.serialization.json)
             }
         }
     }

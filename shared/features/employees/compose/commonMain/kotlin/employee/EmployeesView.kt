@@ -30,11 +30,42 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import employee.models.EmployeesEvent
+import employee.models.EmployeesDataState
 import models.Employee
+import decompose.State
+import widget.ErrorView
+import widget.LoadingView
+
+@Composable
+fun EmployeesView(
+    state: State<EmployeesDataState>,
+    eventHandler: (EmployeesEvent) -> Unit
+) {
+
+    when (state) {
+        is State.Success -> {
+            SuccessStateEmployees(state.data.employees, eventHandler)
+        }
+
+        is State.Loading -> {
+            LoadingView()
+        }
+
+        is State.Error -> {
+            ErrorView()
+        }
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EmployeeView(employees: List<Employee>) {
+fun SuccessStateEmployees(
+    employees: List<Employee>,
+    eventHandler: (EmployeesEvent) -> Unit
+) {
+
+
     val expandedCardIndex = remember { mutableStateOf(-1) }
 
 
@@ -86,7 +117,11 @@ fun EmployeeView(employees: List<Employee>) {
         ) {
             Spacer(modifier = Modifier.height(16.dp))
             EmployeeList(employees, expandedCardIndex.value) { index ->
-                expandedCardIndex.value = if (expandedCardIndex.value == index) -1 else index
+                eventHandler(
+                    EmployeesEvent.ClickEmployees(
+                        employee = employees[index]
+                    )
+                )
             }
         }
     }
@@ -100,7 +135,11 @@ fun EmployeeList(
 ) {
     LazyColumn {
         items(employees) { employee ->
-            EmployeeCard(employees.indexOf(employee), employee, expandedCardIndex == employees.indexOf(employee)) {
+            EmployeeCard(
+                employees.indexOf(employee),
+                employee,
+                expandedCardIndex == employees.indexOf(employee)
+            ) {
                 onEmployeeClick(employees.indexOf(employee))
             }
         }

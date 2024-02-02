@@ -28,7 +28,11 @@ val employeesModule = module {
 
     single {
         viewModelFactory {
-            EmployeeListViewModel(dispatchers = Dispatchers, listenEmployees = get(), fetchEmployees = get())
+            DefaultEmployeeListComponent(
+                dispatchers = Dispatchers,
+                listenEmployees = get(),
+                fetchEmployees = get()
+            )
         }.createViewModel()
 
     }

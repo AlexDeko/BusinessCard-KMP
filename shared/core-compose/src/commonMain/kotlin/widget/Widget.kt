@@ -7,9 +7,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun ErrorView() {
+fun ErrorView(text: String = "Ошибка!") {
     Column(verticalArrangement = Arrangement.Center) {
-        Text("Ошибка!")
+        Text(text = text)
     }
 }
 

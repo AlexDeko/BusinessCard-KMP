@@ -35,4 +35,5 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(project(":shared:features:employees:compose"))
     implementation(libs.androidx.appcompat)
+    implementation(libs.decompose)
 }

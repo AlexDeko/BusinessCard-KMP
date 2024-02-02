@@ -1,0 +1,3 @@
+package decompose
+
+interface EmployeesComponent

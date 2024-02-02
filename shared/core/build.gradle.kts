@@ -28,8 +28,7 @@ kotlin {
                 implementation(compose.material)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
-                api(libs.moko.mvvm.compose)
-                api(libs.moko.mvvm.compose.flow)
+                implementation(libs.decompose)
             }
         }
 

@@ -1,6 +1,7 @@
 plugins {
     id("kotlin.multiplatform")
     id("org.jetbrains.kotlin.native.cocoapods")
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 kotlin {
@@ -23,9 +24,13 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":shared:core"))
-                implementation(project(":shared:features:employees:data"))
+                implementation(project(":shared:features:employees:api"))
                 implementation(project(":shared:features:employees:presentation"))
+                implementation(project(":shared:features:employee_details:api"))
+                implementation(project(":shared:features:employee_details:presentation"))
                 api(project(":shared:core-compose"))
+                implementation(libs.decompose)
+                implementation(libs.decompose.jetbrains.compose.extensions)
             }
         }
 
