@@ -3,27 +3,27 @@ package root
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
-import com.arkivanov.decompose.router.stack.active
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
-import com.arkivanov.essenty.lifecycle.Lifecycle
-import decompose.BaseComponent
-import employee.DefaultEmployeeListComponent
+import decompose.EmployeeListComponent
+import decompose.SimpleBaseComponent
+import employees.DefaultEmployeeListComponent
 import kotlinx.serialization.Serializable
 
 class DefaultRootComponent(
     componentContext: ComponentContext
-) : BaseComponent(), RootComponent, ComponentContext by componentContext {
-    private val navigation = StackNavigation<ConfigBottom>()
+) : SimpleBaseComponent(componentContext), RootComponent {
+    private val navigation = StackNavigation<RootConfig>()
 
     private val _childStackBottom =
         childStack(
-            source = navigationBottomStackNavigation,
-            initialConfiguration = ConfigBottom.Welcome,
+            source = navigation,
+            initialConfiguration = RootConfig.EmployeesList,
+            serializer = RootConfig.serializer(),
             handleBackButton = true,
             childFactory = ::createChildBottom,
-            key = "authStack"
+            key = "rootStack"
         )
 
     override val childStackBottom: Value<ChildStack<*, RootComponent.ChildBottom>> =
@@ -31,55 +31,27 @@ class DefaultRootComponent(
 
 
     private fun createChildBottom(
-        config: ConfigBottom,
+        config: RootConfig,
         componentContext: ComponentContext
     ): RootComponent.ChildBottom =
         when (config) {
-
-            is ConfigBottom.Welcome -> RootComponent.ChildBottom.WelcomeChild(
-                welcomeComponent(componentContext)
-            )
-
-            is ConfigBottom.Feeds -> RootComponent.ChildBottom.FeedsChild(
-                feedsComponent(componentContext)
-            )
-
-            is ConfigBottom.Message -> RootComponent.ChildBottom.MessageChild(
-                messageComponent(componentContext)
-            )
-
-            is ConfigBottom.Notification -> RootComponent.ChildBottom.NotificationsChild(
-                notificationComponent(componentContext)
+            is RootConfig.EmployeesList -> RootComponent.ChildBottom.EmployeesListChild(
+                employeeListComponent(componentContext)
             )
         }
 
-
-    private fun welcomeComponent(componentContext: ComponentContext): HomeComponent =
+    private fun employeeListComponent(componentContext: ComponentContext): EmployeeListComponent =
         DefaultEmployeeListComponent(
             componentContext = componentContext,
         )
 
     override fun openListEmployees() {
-        navigationBottomStackNavigation.bringToFront(RootConfig.ListEmployees)
+        navigation.bringToFront(RootConfig.EmployeesList)
     }
 
+    @Serializable
     private sealed class RootConfig {
         @Serializable
-        data object ListEmployees : RootConfig()
+        data object EmployeesList : RootConfig()
     }
-
-    init {
-        lifecycle.subscribe(object : Lifecycle.Callbacks {
-            override fun onResume() {
-                when (childStackBottom.active.configuration) {
-                    is ConfigBottom.Message -> {
-                        super.onResume()
-                    }
-
-                }
-            }
-        })
-
-    }
-
 }

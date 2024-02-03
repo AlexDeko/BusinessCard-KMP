@@ -1,15 +1,6 @@
-package employee
+import com.arkivanov.decompose.ComponentContext
+import decompose.SimpleBaseComponent
 
-import decompose.BaseComponent
-import employee.models.EmployeesAction
-import employee.models.EmployeesEvent
-import models.Employee
-import view_model.State
-
-class DefaultEmployeeDetailsComponent :
-    BaseComponent<State<Employee>, EmployeesAction, EmployeesEvent>(initialState = State.Loading) {
-    override fun obtainEvent(event: EmployeesEvent) {
-
-    }
-
-}
+class DefaultEmployeeDetailsComponent(
+    component: ComponentContext
+) : SimpleBaseComponent(component)

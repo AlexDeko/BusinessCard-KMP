@@ -19,5 +19,5 @@ kotlin {
 }
 
 android {
-    namespace = "com.card.business.features.employee.api"
+    namespace = "com.card.business.features.employee_details.api"
 }

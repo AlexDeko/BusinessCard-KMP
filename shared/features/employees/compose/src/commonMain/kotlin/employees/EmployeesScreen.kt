@@ -1,4 +1,4 @@
-package employee
+package employees
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -30,12 +30,62 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import employee.models.EmployeesEvent
-import employee.models.EmployeesDataState
-import models.Employee
+import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
+import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.plus
+import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.scale
+import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
+import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.push
+import decompose.EmployeeListComponent
 import decompose.State
+import employee.EmployeeDetailedView
+import employees.models.EmployeesAction
+import employees.models.EmployeesDataState
+import employees.models.EmployeesEvent
+import extensions.observeAsState
+import kotlinx.serialization.Serializable
+import models.Employee
+import navigator.ChildStack
 import widget.ErrorView
 import widget.LoadingView
+
+@Composable
+fun EmployeeListScreen(
+    component: EmployeeListComponent,
+) {
+    val navigation = remember { StackNavigation<ListEmployeesConfig>() }
+    val state = component.states.observeAsState()
+    val action = component.actions.observeAsState()
+
+    ChildStack(
+        source = navigation,
+        initialStack = {
+            listOf()
+        },
+        serializer =,
+        animation = stackAnimation(fade() + scale()),
+        handleBackButton = true
+    ) { screen ->
+        when (screen) {
+            is ListEmployeesConfig.EmployeesDetailed -> EmployeeDetailedView(employee = screen.employee)
+        }
+    }
+
+    when (val value = action.value) {
+        is EmployeesAction.ShowDetails -> navigation.push(
+            ListEmployeesConfig.EmployeesDetailed(
+                employee = value.employee
+            )
+        )
+
+        else -> {}
+    }
+
+    EmployeesView(
+        state = state.value,
+        eventHandler = component::obtainEvent
+    )
+}
 
 @Composable
 fun EmployeesView(
@@ -62,10 +112,8 @@ fun EmployeesView(
 @Composable
 fun SuccessStateEmployees(
     employees: List<Employee>,
-    eventHandler: (EmployeesEvent) -> Unit
+    eventHandler: (EmployeesEvent) -> Unit,
 ) {
-
-
     val expandedCardIndex = remember { mutableStateOf(-1) }
 
 
@@ -184,4 +232,11 @@ fun EmployeeCard(position: Int, employee: Employee, isExpanded: Boolean, onCardC
             }
         }
     }
+}
+
+@Serializable
+sealed class ListEmployeesConfig {
+
+    @Serializable
+    data class EmployeesDetailed(val employee: Employee) : ListEmployeesConfig()
 }

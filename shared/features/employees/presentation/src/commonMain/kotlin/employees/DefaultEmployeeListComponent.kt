@@ -1,12 +1,13 @@
-package employee
+package employees
 
 import com.arkivanov.decompose.ComponentContext
 import coroutines.Dispatchers
 import decompose.BaseComponent
+import decompose.EmployeeListComponent
 import decompose.State
-import employee.models.EmployeesAction
-import employee.models.EmployeesDataState
-import employee.models.EmployeesEvent
+import employees.models.EmployeesAction
+import employees.models.EmployeesDataState
+import employees.models.EmployeesEvent
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
@@ -17,15 +18,14 @@ import usecases.ListenEmployees
 
 
 class DefaultEmployeeListComponent(
-    private val dispatchers: Dispatchers,
-
-    private val fetchEmployees: FetchEmployees,
     private val componentContext: ComponentContext,
 ) : BaseComponent<EmployeesDataState, EmployeesAction, EmployeesEvent>(
     initialState = State.Loading,
     componentContext = componentContext
-) {
+), EmployeeListComponent {
     private val listenEmployees: ListenEmployees by inject()
+    private val dispatchers: Dispatchers by inject()
+    private val fetchEmployees: FetchEmployees by inject()
 
     init {
         componentScope.launch {

@@ -1,23 +1,22 @@
 package root
 
-import about.AboutComponent
-import buy.BuyComponent
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
-import home.HomeComponent
-import notifications.NotificationComponent
+import decompose.EmployeeListComponent
 
 
 interface RootComponent {
     val childStackBottom: Value<ChildStack<*, ChildBottom>>
-    fun openListEmployees())
+
+    fun openListEmployees()
+
+    //fun openAboutCompany()
+
 
     sealed class ChildBottom {
-        class WelcomeChild(val component: HomeComponent) : ChildBottom()
-        class FeedsChild(val component: BuyComponent) : ChildBottom()
-        class MessageChild(val component: AboutComponent) : ChildBottom()
-        class NotificationsChild(val component: NotificationComponent) : ChildBottom()
+        class EmployeesListChild(val component: EmployeeListComponent) : ChildBottom()
+        //TODO
+        // class AboutOfCompanyChild(val component: BuyComponent) : ChildBottom()
     }
-
 
 }

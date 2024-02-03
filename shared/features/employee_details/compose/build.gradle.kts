@@ -9,18 +9,16 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(project(":shared:core-compose"))
-                api(project(":shared:features:employees:api"))
+                api(project(":shared:features:employee_details:api"))
                 implementation(project(":shared:core-utils"))
                 api(project(":shared:core"))
                 implementation(libs.koin.compose)
                 api(project(":shared:features:employees:presentation"))
-
-                implementation(project(":shared:features:employee_details:compose"))
             }
         }
     }
 }
 
 android {
-    namespace = "com.card.business.features.employee.compose"
+    namespace = "com.card.business.features.employee_details.compose"
 }

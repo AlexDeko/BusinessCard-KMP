@@ -8,8 +8,8 @@ import androidx.compose.material.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.defaultComponentContext
-import employee.EmployeeListScreen
-import navigator.ProvideComponentContext
+import root.DefaultRootComponent
+import root.RootBottomScreen
 import theme.BusinessCardAppTheme
 import theme.MyApplicationTheme
 
@@ -17,7 +17,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val rootComponentContext = defaultComponentContext()
+        val rootComponent = DefaultRootComponent(
+            componentContext = defaultComponentContext(),
+        )
 
         setContent {
             MyApplicationTheme(customTheme = BusinessCardAppTheme.RentateamTheme) {
@@ -26,8 +28,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background,
                     contentColor = MaterialTheme.colorScheme.primary
                 ) {
-                    ProvideComponentContext(rootComponentContext) {
-                        EmployeeListScreen()
+                    setContent {
+                        RootBottomScreen(rootComponent)
                     }
                 }
             }

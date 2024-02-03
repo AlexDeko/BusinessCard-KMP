@@ -7,15 +7,15 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material)
-                implementation(compose.ui)
-                implementation(compose.material3)
+                api(compose.runtime)
+                api(compose.foundation)
+                api(compose.material)
+                api(compose.ui)
+                api(compose.material3)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                implementation(compose.components.resources)
-                implementation(libs.decompose)
-                implementation(libs.decompose.jetbrains.compose.extensions)
+                api(compose.components.resources)
+                api(libs.decompose)
+                api(libs.decompose.jetbrains.compose.extensions)
             }
         }
     }

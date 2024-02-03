@@ -1,4 +1,4 @@
-package employee.models
+package employees.models
 
 import models.Employee
 

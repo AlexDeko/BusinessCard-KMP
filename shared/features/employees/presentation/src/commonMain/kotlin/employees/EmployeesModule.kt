@@ -1,4 +1,4 @@
-package employee
+package employees
 
 import coroutines.Dispatchers
 import dev.icerock.moko.mvvm.compose.viewModelFactory
