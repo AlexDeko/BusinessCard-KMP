@@ -6,7 +6,6 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
-import decompose.EmployeeListComponent
 import decompose.SimpleBaseComponent
 import employees.DefaultEmployeeListComponent
 import kotlinx.serialization.Serializable
@@ -35,12 +34,16 @@ class DefaultRootComponent(
         componentContext: ComponentContext
     ): RootComponent.ChildBottom =
         when (config) {
-            is RootConfig.EmployeesList -> RootComponent.ChildBottom.EmployeesListChild(
-                employeeListComponent(componentContext)
-            )
+            is RootConfig.EmployeesList -> {
+                val componentWithNavigation = employeeListComponent(componentContext)
+                RootComponent.ChildBottom.EmployeesListChild(
+                    component = componentWithNavigation,
+                    navigator = componentWithNavigation
+                )
+            }
         }
 
-    private fun employeeListComponent(componentContext: ComponentContext): EmployeeListComponent =
+    private fun employeeListComponent(componentContext: ComponentContext) =
         DefaultEmployeeListComponent(
             componentContext = componentContext,
         )

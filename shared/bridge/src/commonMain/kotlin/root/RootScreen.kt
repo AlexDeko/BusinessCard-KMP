@@ -90,7 +90,8 @@ fun RootBottomScreen(
                 ) {
                     when (val child = it.instance) {
                         is RootComponent.ChildBottom.EmployeesListChild -> EmployeeListScreen(
-                            component = child.component
+                            component = child.component,
+                            navigator = child.navigator
                         )
                     }
                 }

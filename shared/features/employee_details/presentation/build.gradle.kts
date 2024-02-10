@@ -8,7 +8,6 @@ kotlin {
             dependencies {
                 api(project(":shared:features:employees:api"))
                 implementation(project(":shared:core"))
-                implementation(project(":shared:features:employees:data"))
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.decompose)
             }

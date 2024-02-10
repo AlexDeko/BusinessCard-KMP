@@ -30,7 +30,7 @@ android {
 
 dependencies {
     implementation(project(":shared:core"))
-    api(project(":shared:core-compose"))
+    implementation(project(":shared:core-compose"))
     implementation(project(":shared:bridge"))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)

@@ -1,7 +1,5 @@
 package employees
 
-import coroutines.Dispatchers
-import dev.icerock.moko.mvvm.compose.viewModelFactory
 import ktor.EmployeesKtorApi
 import network.EmployeesApi
 import org.koin.core.module.dsl.bind
@@ -25,16 +23,4 @@ val employeesModule = module {
     singleOf(::FetchEmployees)
 
     singleOf(::ListenEmployees)
-
-    single {
-        viewModelFactory {
-            DefaultEmployeeListComponent(
-                dispatchers = Dispatchers,
-                listenEmployees = get(),
-                fetchEmployees = get()
-            )
-        }.createViewModel()
-
-    }
-
 }

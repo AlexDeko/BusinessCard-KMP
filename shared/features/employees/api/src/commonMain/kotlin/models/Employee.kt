@@ -1,5 +1,8 @@
 package models
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Employee(
     val id: Long,
     val firstName: String,
@@ -8,13 +11,14 @@ data class Employee(
 )
 
 
-
+@Serializable
 enum class Job {
     DEVELOPER,
     PROJECT_MANAGER,
     QA,
     CEO,
     ADMIN;
+
     companion object {
         fun create(job: String): Job {
             return when (job) {

@@ -4,10 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.doOnDestroy
 import coroutines.coroutineScope
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.koin.core.component.KoinComponent
 
@@ -32,30 +29,20 @@ import org.koin.core.component.KoinComponent
  * И разделить отрисовку экрана и навгицию
  *
  */
-abstract class BaseComponent<SuccessState, Action, Event>(
+abstract class MviComponent<SuccessState, Event>(
     componentContext: ComponentContext,
-    private val initialState: State<SuccessState>
+    private val initialState: State<SuccessState>,
 ) : ComponentContext by componentContext, KoinComponent {
-
 
     protected val componentScope = coroutineScope
 
     private val mutableStates = MutableStateFlow(initialState)
 
-    private val mutableActions = MutableSharedFlow<Action>(
-        replay = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-
     val states = mutableStates.asStateFlow()
-
-    val actions = mutableActions.asSharedFlow()
 
     protected fun pushState(state: State<SuccessState>) {
         mutableStates.value = state
     }
-
-    protected fun pushAction(action: Action) = mutableActions.tryEmit(action)
 
     abstract fun obtainEvent(event: Event)
 

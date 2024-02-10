@@ -24,13 +24,10 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":shared:core"))
-                implementation(project(":shared:bridge"))
                 api(project(":shared:core-compose"))
                 implementation(project(":shared:core-compose"))
 
-                implementation(project(":shared:features:employees:api"))
                 implementation(project(":shared:features:employees:presentation"))
-                //TODO вынести в features:root модуль
                 implementation(project(":shared:features:employees:compose"))
             }
         }
