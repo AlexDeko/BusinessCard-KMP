@@ -9,4 +9,4 @@ getAll:
 SELECT * FROM employeeEntity;
 
 saveEmployee:
-INSERT INTO employeeEntity(id, last_name, first_name, job) VALUES ?;
+INSERT OR REPLACE INTO employeeEntity(id, last_name, first_name, job) VALUES ?;
