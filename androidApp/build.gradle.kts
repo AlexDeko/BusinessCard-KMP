@@ -1,5 +1,6 @@
 plugins {
     id("android.application")
+    id("org.jetbrains.compose")
 }
 
 android {

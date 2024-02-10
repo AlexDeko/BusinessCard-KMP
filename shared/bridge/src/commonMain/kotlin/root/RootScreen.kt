@@ -36,6 +36,7 @@ fun RootBottomScreen(
     component: RootComponent,
     modifier: Modifier = Modifier
 ) {
+
     var selectedItem by remember { mutableIntStateOf(0) }
     val screens by remember {
         mutableStateOf(
