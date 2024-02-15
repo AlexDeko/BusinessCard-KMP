@@ -2,11 +2,12 @@ package decompose
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.doOnDestroy
-import coroutines.coroutineScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 
 /**
@@ -34,7 +35,7 @@ abstract class MviComponent<SuccessState, Event>(
     private val initialState: State<SuccessState>,
 ) : ComponentContext by componentContext, KoinComponent {
 
-    protected val componentScope = coroutineScope
+    protected val componentScope: CoroutineScope by inject()
 
     private val mutableStates = MutableStateFlow(initialState)
 
