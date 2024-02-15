@@ -29,6 +29,10 @@ include(":shared:features:employees:presentation")
 include(":shared:features:employees:data")
 include(":shared:features:employees:compose")
 
+include(":shared:features:employee_details:api")
+include(":shared:features:employee_details:presentation")
+include(":shared:features:employee_details:compose")
+
 include(":shared:core")
 include(":shared:core-compose")
 include(":shared:core-utils")

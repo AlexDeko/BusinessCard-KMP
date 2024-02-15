@@ -21,7 +21,7 @@ class EmployeeRepositoryImpl(
         }
 
     override suspend fun fetchEmployees() {
-        ktorApi.fetchEmployees().map {
+        ktorApi.fetchEmployees().employees.map {
             db.saveEmployeeEntity(it.mapToEmployeeEntity())
         }
     }

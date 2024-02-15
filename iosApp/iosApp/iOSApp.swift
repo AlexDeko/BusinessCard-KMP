@@ -3,6 +3,8 @@ import bridge
 
 @main
 struct iOSApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self)
+       var appDelegate: AppDelegate
     
     init() {
         let platformConfiguration = PlatformConfiguration()
@@ -13,7 +15,16 @@ struct iOSApp: App {
 
 	var body: some Scene {
 		WindowGroup {
-			ContentView()
+            ContentView(appDelegate.root)
 		}
 	}
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+
+    lazy var root: RootComponent = DefaultRootComponent(
+        componentContext: DefaultComponentContext(
+            lifecycle: ApplicationLifecycle()
+        )
+    )
 }

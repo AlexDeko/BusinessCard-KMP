@@ -1,5 +1,0 @@
-package login
-
-fun EmployeeView() {
-
-}

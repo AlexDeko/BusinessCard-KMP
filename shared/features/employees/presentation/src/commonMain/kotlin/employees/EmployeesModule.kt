@@ -1,4 +1,4 @@
-package di
+package employees
 
 import ktor.EmployeesKtorApi
 import network.EmployeesApi
@@ -13,6 +13,7 @@ import usecases.FetchEmployees
 import usecases.ListenEmployees
 
 val employeesModule = module {
+
     singleOf(::EmployeesKtorApi) { bind<EmployeesApi>() }
 
     singleOf(::EmployeesSqlDelightStorage) { bind<EmployeesStorage>() }

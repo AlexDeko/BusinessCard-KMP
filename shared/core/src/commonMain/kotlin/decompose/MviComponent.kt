@@ -1,11 +1,14 @@
-package view_model
+package decompose
 
-import dev.icerock.moko.mvvm.viewmodel.ViewModel
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.essenty.lifecycle.doOnDestroy
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+
 
 /**
  * State - сотояние экрана; которое обновляется после события [Event]
@@ -26,37 +29,36 @@ import kotlinx.coroutines.flow.asStateFlow
  * State и Action разделены, чтобы рекомпозиция была эффективнее
  * И разделить отрисовку экрана и навгицию
  *
- * В composable function мы подписываемя на [states]  и [actions]
  */
-abstract class BaseViewModel<State : Any, Action, Event>(
-    initialState: State
-) : ViewModel() {
+abstract class MviComponent<SuccessState, Event>(
+    componentContext: ComponentContext,
+    private val initialState: State<SuccessState>,
+) : ComponentContext by componentContext, KoinComponent {
+
+    protected val componentScope: CoroutineScope by inject()
 
     private val mutableStates = MutableStateFlow(initialState)
 
-    private val mutableActions = MutableSharedFlow<Action>(
-        replay = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-
-    private val mutableEvents = MutableSharedFlow<Event>(
-        replay = 0,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-
-
     val states = mutableStates.asStateFlow()
 
-    val currentState get() = states.value
-
-    val actions = mutableActions.asSharedFlow()
+    protected fun pushState(state: State<SuccessState>) {
+        mutableStates.value = state
+    }
 
     abstract fun obtainEvent(event: Event)
 
-
-    protected fun pushAction(action: Action) = mutableActions.tryEmit(action)
-
-    protected fun pushState(state: State) {
-        mutableStates.value = state
+    init {
+        lifecycle.doOnDestroy {
+            componentScope.cancel()
+        }
     }
+}
+
+sealed interface State<out T> {
+
+    object Loading : State<Nothing>
+
+    data class Error(val throwable: Throwable) : State<Nothing>
+
+    data class Success<T>(val data: T) : State<T>
 }

@@ -6,6 +6,9 @@ import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.header
+import io.ktor.http.ContentType
+import io.ktor.serialization.kotlinx.KotlinxSerializationConverter
+import io.ktor.serialization.kotlinx.json.KotlinxSerializationJsonExtensionProvider
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import ktor.HttpEngineFactory
@@ -17,6 +20,11 @@ internal val ktorModule = module {
             install(DefaultRequest)
 
             install(ContentNegotiation) {
+                register(ContentType.Text.Plain, KotlinxSerializationConverter( Json {
+                    isLenient = true
+                    ignoreUnknownKeys = true
+                    prettyPrint = true
+                }))
                 json(
                     Json {
                         isLenient = true

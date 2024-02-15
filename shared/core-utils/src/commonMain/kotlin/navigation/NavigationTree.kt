@@ -4,7 +4,8 @@ sealed interface NavigationTree {
 
     data object SplashScreen : NavigationTree
 
-    enum class MainFlow : NavigationTree {
-        EmployeesScreen
+    sealed class MainFlow : NavigationTree {
+        //EmployeesScreen,
+
     }
 }

@@ -1,6 +1,8 @@
 plugins {
     id("kotlin.multiplatform")
     id("org.jetbrains.kotlin.native.cocoapods")
+    alias(libs.plugins.kotlinx.serialization)
+    id("org.jetbrains.compose")
 }
 
 kotlin {
@@ -16,6 +18,9 @@ kotlin {
             linkerOpts("-lsqlite3")
             export(project(":shared:core"))
             export(project(":shared:core-utils"))
+            export(libs.decompose)
+            export(libs.decompose.jetbrains.compose.extensions)
+            export(libs.essenty.lifecycle)
         }
     }
 
@@ -23,7 +28,10 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":shared:core"))
-                implementation(project(":shared:features:employees:data"))
+                api(project(":shared:core-compose"))
+
+                implementation(project(":shared:features:employees:presentation"))
+                implementation(project(":shared:features:employees:compose"))
             }
         }
 
@@ -31,6 +39,9 @@ kotlin {
             dependencies {
                 api(project(":shared:core"))
                 api(project(":shared:core-utils"))
+                api(libs.decompose)
+                api(libs.decompose.jetbrains.compose.extensions)
+                api(libs.essenty.lifecycle)
             }
         }
     }

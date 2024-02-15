@@ -9,7 +9,7 @@ val coroutinesModule = module {
     single {
         defaultCoroutineScope
     }
-    singleOf(Dispatchers::IO)
-    singleOf(Dispatchers::Default)
-    singleOf(Dispatchers::Main)
+    single {
+        Dispatchers
+    }
 }
