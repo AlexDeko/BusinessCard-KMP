@@ -81,7 +81,7 @@ fun EmployeesView(
 
     when (state) {
         is State.Success -> {
-            SuccessStateEmployees(state.data.employees + state.data.employees + state.data.employees+ state.data.employees  + state.data.employees, eventHandler)
+            SuccessStateEmployees(state.data.employees, eventHandler)
         }
 
         is State.Loading -> {

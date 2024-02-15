@@ -8,8 +8,8 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import decompose.SimpleBaseComponent
 import employees.DefaultEmployeeListComponent
-import employees.DefaultSandboxComponent
 import kotlinx.serialization.Serializable
+import sandbox.DefaultSandboxComponent
 
 class DefaultRootComponent(
     componentContext: ComponentContext

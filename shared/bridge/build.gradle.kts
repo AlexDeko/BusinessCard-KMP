@@ -26,9 +26,12 @@ kotlin {
             dependencies {
                 implementation(project(":shared:core"))
                 api(project(":shared:core-compose"))
-
+                implementation(project(":shared:features:sandbox:presentation"))
                 implementation(project(":shared:features:employees:presentation"))
+                implementation(project(":shared:features:sandbox:api"))
                 implementation(project(":shared:features:employees:compose"))
+                implementation(project(":shared:features:sandbox:compose"))
+
             }
         }
 

@@ -28,7 +28,7 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.plus
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.scale
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
 import employees.EmployeeListScreen
-import employees.SandboxScreen
+import sandbox.SandboxScreen
 
 data class ScreensBottom(val name: String, val openScreen: () -> Unit, val isSelected: Boolean)
 

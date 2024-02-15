@@ -5,7 +5,7 @@ import com.arkivanov.decompose.value.Value
 import decompose.EmployeeListNavigator
 import decompose.SandboxNavigator
 import employees.DefaultEmployeeListComponent
-import employees.DefaultSandboxComponent
+import sandbox.DefaultSandboxComponent
 
 
 interface RootComponent {
@@ -24,7 +24,10 @@ interface RootComponent {
             val navigator: EmployeeListNavigator,
         ) : ChildBottom()
 
-        class SandboxChild(val component: DefaultSandboxComponent, val navigator: SandboxNavigator): ChildBottom()
+        class SandboxChild(
+            val component: DefaultSandboxComponent,
+            val navigator: SandboxNavigator
+        ) : ChildBottom()
 
         //TODO
         // class AboutOfCompanyChild(val component: BuyComponent) : ChildBottom()

@@ -1,4 +1,4 @@
-package employees.models
+package sandbox.models
 
 class SandboxDefaultState {
 }

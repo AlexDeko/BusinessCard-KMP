@@ -1,4 +1,4 @@
-package employees
+package sandbox
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
@@ -8,9 +8,9 @@ import com.arkivanov.decompose.value.Value
 import decompose.MviComponent
 import decompose.SandboxNavigator
 import decompose.State
-import employees.models.SandboxDefaultState
-import employees.models.SandboxEvent
 import kotlinx.serialization.Serializable
+import sandbox.models.SandboxDefaultState
+import sandbox.models.SandboxEvent
 
 class DefaultSandboxComponent(private val componentContext: ComponentContext) :
     MviComponent<SandboxDefaultState, SandboxEvent>(componentContext, State.Loading),
