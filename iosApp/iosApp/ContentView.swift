@@ -1,14 +1,29 @@
 import SwiftUI
+import bridge
 
-struct ContentView: View {
+struct ComposeView: UIViewControllerRepresentable {
+    private let rootComponent: RootComponent
+    
+    init(_ root: RootComponent) {
+        self.rootComponent = root
+    }
+    
+    func makeUIViewController(context: Context) -> UIViewController {
+         MainIOSKt.MainViewController(component: rootComponent)
+    }
 
-	var body: some View {
-		Text("greet")
-	}
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
 
-struct ContentView_Previews: PreviewProvider {
-	static var previews: some View {
-		ContentView()
-	}
+struct ContentView: View {
+    private let rootComponent: RootComponent
+    
+    init(_ root: RootComponent) {
+        self.rootComponent = root
+    }
+    
+    var body: some View {
+        ComposeView(rootComponent)
+                .ignoresSafeArea(.all, edges: .bottom) // Compose has own keyboard handler
+    }
 }
