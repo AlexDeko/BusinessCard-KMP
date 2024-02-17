@@ -40,7 +40,6 @@ import decompose.SandboxNavigator
 import sandbox.models.SandboxDefaultState
 import sandbox.models.SandboxEvent
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SandboxScreen(
     component: MviComponent<SandboxDefaultState, SandboxEvent>,
