@@ -9,12 +9,10 @@ kotlin {
             dependencies {
                 implementation(project(":shared:features:employees:api"))
                 implementation(project(":shared:core"))
-
-                api(libs.koin.core)
-
+                implementation(libs.koin.core)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.sqldelight.coroutines.extensions)
-                api(libs.ktor.client.core)
+                implementation(libs.ktor.client.core)
             }
         }
     }
