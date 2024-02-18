@@ -10,6 +10,7 @@ kotlin {
             dependencies {
                 implementation(project(":shared:core"))
                 implementation(libs.koin.core)
+                implementation(libs.decompose)
             }
         }
     }

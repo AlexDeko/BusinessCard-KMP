@@ -13,6 +13,7 @@ kotlin {
                 implementation(project(":shared:core"))
                 implementation(project(":shared:features:employees:presentation"))
                 implementation(project(":shared:features:employee_details:compose"))
+                implementation(libs.koin.compose)
             }
         }
     }

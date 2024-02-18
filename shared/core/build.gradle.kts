@@ -17,7 +17,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(libs.koin.core)
+                implementation(libs.koin.core)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.content.negotiation)
@@ -28,7 +28,7 @@ kotlin {
                 implementation(compose.material)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
-                api(libs.decompose)
+                implementation(libs.decompose)
             }
         }
 
