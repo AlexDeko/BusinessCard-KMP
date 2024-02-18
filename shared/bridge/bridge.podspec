@@ -46,5 +46,5 @@ Pod::Spec.new do |spec|
             SCRIPT
         }
     ]
-    spec.resources = ['build\compose\ios\bridge\compose-resources']
+    spec.resources = ['build/compose/ios/bridge/compose-resources']
 end

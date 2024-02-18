@@ -22,18 +22,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.plus
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.scale
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
 import employees.EmployeeListScreen
+import root.model.RootEvent
 import sandbox.SandboxScreen
 
 data class ScreensBottom(val name: String, val openScreen: () -> Unit, val isSelected: Boolean)
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalDecomposeApi::class)
 @Composable
 fun RootBottomScreen(
     component: RootComponent,
@@ -44,8 +39,20 @@ fun RootBottomScreen(
     val screens by remember {
         mutableStateOf(
             listOf(
-                ScreensBottom("ListEmployees", component::openListEmployees, false),
-                ScreensBottom("Sandbox", component::openSandbox, false)
+                ScreensBottom(
+                    name = "ListEmployees",
+                    openScreen = {
+                        component.obtainEvent(RootEvent.ListEmployeesClicked)
+                    },
+                    isSelected = false
+                ),
+                ScreensBottom(
+                    name = "Sandbox",
+                    openScreen = {
+                        component.obtainEvent(RootEvent.SandboxTabClicked)
+                    },
+                    isSelected = false
+                ),
                 //TODO create third tab
                 //ScreensBottom("AboutCompany", component::openAboutCompany, false),
             )
@@ -93,9 +100,8 @@ fun RootBottomScreen(
         content = { innerpadding ->
             Column(modifier = Modifier.padding(innerpadding)) {
                 Children(
-                    stack = component.childStackBottom,
+                    stack = component.childStackNavigation,
                     modifier = modifier,
-                    animation = stackAnimation(fade() + scale())
                 ) {
                     when (val child = it.instance) {
                         is RootComponent.ChildBottom.EmployeesListChild -> EmployeeListScreen(
