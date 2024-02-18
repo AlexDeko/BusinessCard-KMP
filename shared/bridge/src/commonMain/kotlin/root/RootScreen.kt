@@ -3,10 +3,11 @@ package root
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
@@ -28,6 +29,7 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.plus
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.scale
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
 import employees.EmployeeListScreen
+import sandbox.SandboxScreen
 
 data class ScreensBottom(val name: String, val openScreen: () -> Unit, val isSelected: Boolean)
 
@@ -43,7 +45,8 @@ fun RootBottomScreen(
         mutableStateOf(
             listOf(
                 ScreensBottom("ListEmployees", component::openListEmployees, false),
-                //TODO create second tab
+                ScreensBottom("Sandbox", component::openSandbox, false)
+                //TODO create third tab
                 //ScreensBottom("AboutCompany", component::openAboutCompany, false),
             )
         )
@@ -52,7 +55,7 @@ fun RootBottomScreen(
     Scaffold(
         bottomBar = {
             BottomAppBar(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().wrapContentHeight(),
                 actions = {
                     screens.forEachIndexed { index, screensBottom ->
                         NavigationBarItem(
@@ -60,6 +63,10 @@ fun RootBottomScreen(
                                 when (screensBottom.name) {
                                     "ListEmployees" -> Icon(
                                         Icons.Outlined.Home,
+                                        contentDescription = null
+                                    )
+                                    "Sandbox" -> Icon(
+                                        Icons.Outlined.Info,
                                         contentDescription = null
                                     )
                                 }
@@ -92,6 +99,11 @@ fun RootBottomScreen(
                 ) {
                     when (val child = it.instance) {
                         is RootComponent.ChildBottom.EmployeesListChild -> EmployeeListScreen(
+                            component = child.component,
+                            navigator = child.navigator
+                        )
+
+                        is RootComponent.ChildBottom.SandboxChild -> SandboxScreen(
                             component = child.component,
                             navigator = child.navigator
                         )

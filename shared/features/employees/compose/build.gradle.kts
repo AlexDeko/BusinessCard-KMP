@@ -11,7 +11,6 @@ kotlin {
                 implementation(project(":shared:core-compose"))
                 implementation(project(":shared:core-utils"))
                 implementation(project(":shared:core"))
-                implementation(libs.koin.compose)
                 implementation(project(":shared:features:employees:presentation"))
                 implementation(project(":shared:features:employee_details:compose"))
             }
