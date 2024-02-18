@@ -19,8 +19,9 @@ kotlin {
             export(project(":shared:core"))
             export(project(":shared:core-utils"))
             export(libs.decompose)
-            export(libs.decompose.jetbrains.compose.extensions)
+            export(libs.essenty.stateKeeper)
             export(libs.essenty.lifecycle)
+            export(libs.essenty.backHandler)
         }
     }
 
@@ -40,8 +41,9 @@ kotlin {
                 api(project(":shared:core"))
                 api(project(":shared:core-utils"))
                 api(libs.decompose)
-                api(libs.decompose.jetbrains.compose.extensions)
+                api(libs.essenty.stateKeeper)
                 api(libs.essenty.lifecycle)
+                api(libs.essenty.backHandler)
             }
         }
     }

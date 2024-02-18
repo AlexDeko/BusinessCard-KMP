@@ -15,16 +15,21 @@ struct iOSApp: App {
 
 	var body: some Scene {
 		WindowGroup {
-            ContentView(appDelegate.root)
+            ContentView(root: appDelegate.root, backDispatcher: appDelegate.backDispatcher)
 		}
 	}
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
+    private var stateKeeper = StateKeeperDispatcherKt.StateKeeperDispatcher(savedState: nil)
+    var backDispatcher: BackDispatcher = BackDispatcherKt.BackDispatcher()
 
     lazy var root: RootComponent = DefaultRootComponent(
         componentContext: DefaultComponentContext(
-            lifecycle: ApplicationLifecycle()
+            lifecycle: ApplicationLifecycle(),
+            stateKeeper: stateKeeper,
+            instanceKeeper: nil,
+            backHandler: backDispatcher
         )
     )
 }

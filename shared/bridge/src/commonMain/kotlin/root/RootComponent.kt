@@ -13,7 +13,6 @@ interface RootComponent {
 
     //fun openAboutCompany()
 
-
     sealed class ChildBottom {
         class EmployeesListChild(
             val component: DefaultEmployeeListComponent,

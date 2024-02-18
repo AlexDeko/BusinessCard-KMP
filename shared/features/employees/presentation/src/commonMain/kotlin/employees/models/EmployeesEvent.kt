@@ -6,4 +6,5 @@ sealed class EmployeesEvent {
     data class ClickEmployees(
         val employee: Employee
     ) : EmployeesEvent()
+    data object Back : EmployeesEvent()
 }

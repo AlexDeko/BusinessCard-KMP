@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.plus
@@ -30,7 +31,7 @@ import employees.EmployeeListScreen
 
 data class ScreensBottom(val name: String, val openScreen: () -> Unit, val isSelected: Boolean)
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalDecomposeApi::class)
 @Composable
 fun RootBottomScreen(
     component: RootComponent,
@@ -87,7 +88,7 @@ fun RootBottomScreen(
                 Children(
                     stack = component.childStackBottom,
                     modifier = modifier,
-                    animation = stackAnimation(fade() + scale()),
+                    animation = stackAnimation(fade() + scale())
                 ) {
                     when (val child = it.instance) {
                         is RootComponent.ChildBottom.EmployeesListChild -> EmployeeListScreen(
@@ -98,6 +99,4 @@ fun RootBottomScreen(
                 }
             }
         })
-
-
 }

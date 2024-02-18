@@ -31,11 +31,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import animation.backAnimation
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.plus
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.scale
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
 import decompose.EmployeeListNavigator
 import decompose.MviComponent
 import decompose.State
@@ -56,8 +53,13 @@ fun EmployeeListScreen(
 
     Children(
         stack = navigator.childStackNavigation,
-        modifier = modifier,
-        animation = stackAnimation(fade() + scale()),
+        modifier = modifier.fillMaxSize(),
+        animation = backAnimation(
+            backHandler = component.backHandler,
+            onBack = {
+                component.obtainEvent(EmployeesEvent.Back)
+            },
+        ),
     ) {
         when (val child = it.instance) {
             is EmployeeListNavigator.Child.EmployeesListChild -> EmployeesView(
