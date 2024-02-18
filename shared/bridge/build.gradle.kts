@@ -19,8 +19,9 @@ kotlin {
             export(project(":shared:core"))
             export(project(":shared:core-utils"))
             export(libs.decompose)
-            export(libs.decompose.jetbrains.compose.extensions)
+            export(libs.essenty.stateKeeper)
             export(libs.essenty.lifecycle)
+            export(libs.essenty.backHandler)
         }
     }
 
@@ -43,12 +44,12 @@ kotlin {
 
         iosMain {
             dependencies {
-                implementation(project(":shared:core"))
-                implementation(project(":shared:core-utils"))
-                implementation(libs.decompose)
-                implementation(libs.koin.core)
-                implementation(libs.decompose.jetbrains.compose.extensions)
-                implementation(libs.essenty.lifecycle)
+                api(project(":shared:core"))
+                api(project(":shared:core-utils"))
+                api(libs.decompose)
+                api(libs.essenty.stateKeeper)
+                api(libs.essenty.lifecycle)
+                api(libs.essenty.backHandler)
             }
         }
     }

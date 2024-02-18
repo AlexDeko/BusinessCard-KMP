@@ -55,6 +55,7 @@ moko-mvvm-compose-flow = { module = "dev.icerock.moko:mvvm-flow-compose", versio
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decomposeVersion" }
 decompose-jetbrains-compose-extensions = { module = "com.arkivanov.decompose:extensions-compose-jetbrains", version.ref = "decomposeVersion" }
 essenty-lifecycle = { group = "com.arkivanov.essenty", name = "lifecycle", version.ref = "essentyVersion" }
+essenty-backHandler = { group = "com.arkivanov.essenty", name = "back-handler", version.ref = "essentyVersion" }
 essenty-stateKeeper = { group = "com.arkivanov.essenty", name = "state-keeper", version.ref = "essentyVersion" }
 essenty-instanceKeeper = { group = "com.arkivanov.essenty", name = "instance-keeper", version.ref = "essentyVersion" }
 

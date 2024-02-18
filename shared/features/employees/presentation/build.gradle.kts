@@ -7,7 +7,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":shared:features:employees:api"))
+                api(project(":shared:features:employees:api"))
                 implementation(project(":shared:core"))
                 implementation(project(":shared:features:employees:data"))
                 implementation(libs.kotlinx.coroutines.core)

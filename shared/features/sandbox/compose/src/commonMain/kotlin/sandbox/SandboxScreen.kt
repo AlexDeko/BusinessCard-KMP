@@ -4,9 +4,11 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -15,7 +17,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.ShapeDefaults
@@ -56,11 +57,11 @@ fun SandboxScreen(
     var buttonText by remember { mutableStateOf(0) }
     //TODO это не работает с inner padding у scaffold в rootscreen хз почему
     Column(
-        modifier = Modifier.padding(
-            16.dp,
-            16.dp,
-            16.dp,
-            80.dp
+        modifier = Modifier.fillMaxSize().background(Color.White).padding(
+            top = 0.dp,
+            start = 16.dp,
+            end = 16.dp,
+            bottom = 0.dp
         ).verticalScroll(rememberScrollState())
     ) {
         Text(text = "Hello World", style = TextStyle(fontSize = 20.sp))
