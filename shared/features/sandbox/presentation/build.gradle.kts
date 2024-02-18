@@ -4,19 +4,18 @@ plugins {
 }
 
 kotlin {
-
     sourceSets {
-        commonMain {
+        val commonMain by getting {
             dependencies {
+                implementation(project(":shared:features:sandbox:api"))
                 implementation(project(":shared:core"))
+                implementation(libs.decompose)
                 implementation(libs.koin.core)
-                implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.kotlinx.serialization.json)
             }
         }
     }
 }
 
 android {
-    namespace = "com.card.business.features.employee_details.api"
+    namespace = "com.card.business.features.sandbox.presentation"
 }

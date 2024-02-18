@@ -6,10 +6,11 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(project(":shared:features:employees:api"))
                 implementation(project(":shared:core"))
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.decompose)
+                implementation(libs.koin.core)
+
             }
         }
     }

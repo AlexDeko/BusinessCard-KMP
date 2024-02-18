@@ -1,7 +1,8 @@
 package employees
 
 import EmployeeDetailedView
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -149,13 +150,15 @@ fun SuccessStateEmployees(
                 .padding(innerPadding)
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-            EmployeeList(employees, expandedCardIndex.value) { index ->
+            EmployeeList(employees, expandedCardIndex.value, { index ->
                 eventHandler(
                     EmployeesEvent.ClickEmployees(
                         employee = employees[index]
                     )
                 )
-            }
+            }, { index ->
+                expandedCardIndex.value = index
+            })
         }
     }
 }
@@ -164,28 +167,38 @@ fun SuccessStateEmployees(
 fun EmployeeList(
     employees: List<Employee>,
     expandedCardIndex: Int,
-    onEmployeeClick: (Int) -> Unit
+    onEmployeeClick: (Int) -> Unit,
+    onEmployeeLongClick: (Int) -> Unit
 ) {
     LazyColumn {
         items(employees) { employee ->
             EmployeeCard(
                 employees.indexOf(employee),
                 employee,
-                expandedCardIndex == employees.indexOf(employee)
-            ) {
-                onEmployeeClick(employees.indexOf(employee))
-            }
+                expandedCardIndex == employees.indexOf(employee),
+                {
+                    onEmployeeClick(employees.indexOf(employee))
+                }, {
+                    onEmployeeLongClick(employees.indexOf(employee))
+                })
         }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun EmployeeCard(position: Int, employee: Employee, isExpanded: Boolean, onCardClick: () -> Unit) {
+fun EmployeeCard(
+    position: Int,
+    employee: Employee,
+    isExpanded: Boolean,
+    onCardClick: () -> Unit,
+    onCardLongClick: () -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(20.dp, 16.dp, 20.dp, 8.dp)
-            .clickable { onCardClick() },
+            .combinedClickable(onLongClick = onCardLongClick, onClick = onCardClick),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),

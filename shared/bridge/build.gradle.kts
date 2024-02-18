@@ -27,21 +27,28 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(libs.koin.core)
+                implementation(libs.decompose)
                 implementation(project(":shared:core"))
-                api(project(":shared:core-compose"))
-
+                implementation(project(":shared:core-compose"))
+                implementation(project(":shared:features:sandbox:presentation"))
                 implementation(project(":shared:features:employees:presentation"))
+                implementation(project(":shared:features:sandbox:api"))
+                implementation(project(":shared:features:employees:api"))
                 implementation(project(":shared:features:employees:compose"))
+                implementation(project(":shared:features:sandbox:compose"))
+
             }
         }
 
         iosMain {
             dependencies {
-                api(project(":shared:core"))
-                api(project(":shared:core-utils"))
-                api(libs.decompose)
-                api(libs.decompose.jetbrains.compose.extensions)
-                api(libs.essenty.lifecycle)
+                implementation(project(":shared:core"))
+                implementation(project(":shared:core-utils"))
+                implementation(libs.decompose)
+                implementation(libs.koin.core)
+                implementation(libs.decompose.jetbrains.compose.extensions)
+                implementation(libs.essenty.lifecycle)
             }
         }
     }

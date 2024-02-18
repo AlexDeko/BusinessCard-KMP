@@ -10,13 +10,11 @@ kotlin {
             dependencies {
                 implementation(project(":shared:core"))
                 implementation(libs.koin.core)
-                implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.kotlinx.serialization.json)
             }
         }
     }
 }
 
 android {
-    namespace = "com.card.business.features.employee_details.api"
+    namespace = "com.card.business.features.sandbox.api"
 }

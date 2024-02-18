@@ -9,6 +9,7 @@ import com.arkivanov.decompose.value.Value
 import decompose.SimpleBaseComponent
 import employees.DefaultEmployeeListComponent
 import kotlinx.serialization.Serializable
+import sandbox.DefaultSandboxComponent
 
 class DefaultRootComponent(
     componentContext: ComponentContext
@@ -41,6 +42,14 @@ class DefaultRootComponent(
                     navigator = componentWithNavigation
                 )
             }
+
+            is RootConfig.Sandbox -> {
+                val componentWithNavigation = sandboxComponent(componentContext)
+                RootComponent.ChildBottom.SandboxChild(
+                    component = componentWithNavigation,
+                    navigator = componentWithNavigation
+                )
+            }
         }
 
     private fun employeeListComponent(componentContext: ComponentContext) =
@@ -48,13 +57,23 @@ class DefaultRootComponent(
             componentContext = componentContext,
         )
 
+    private fun sandboxComponent(componentContext: ComponentContext) =
+        DefaultSandboxComponent(componentContext)
+
     override fun openListEmployees() {
         navigation.bringToFront(RootConfig.EmployeesList)
+    }
+
+    override fun openSandbox() {
+        navigation.bringToFront(RootConfig.Sandbox)
     }
 
     @Serializable
     private sealed class RootConfig {
         @Serializable
         data object EmployeesList : RootConfig()
+
+        @Serializable
+        data object Sandbox : RootConfig()
     }
 }

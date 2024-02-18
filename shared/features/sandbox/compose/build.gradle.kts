@@ -11,14 +11,14 @@ kotlin {
                 implementation(project(":shared:core-compose"))
                 implementation(project(":shared:core-utils"))
                 implementation(project(":shared:core"))
+                implementation(project(":shared:features:sandbox:presentation"))
+                implementation(project(":shared:features:sandbox:api"))
                 implementation(libs.koin.compose)
-                implementation(project(":shared:features:employees:api"))
-                implementation(project(":shared:features:employee_details:presentation"))
             }
         }
     }
 }
 
 android {
-    namespace = "com.card.business.features.employee_details.compose"
+    namespace = "com.card.business.features.sandbox.compose"
 }
