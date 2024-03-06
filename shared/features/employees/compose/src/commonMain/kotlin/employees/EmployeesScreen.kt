@@ -1,6 +1,5 @@
 package employees
 
-import EmployeeDetailedView
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -43,6 +42,7 @@ import employees.models.EmployeesDataState
 import employees.models.EmployeesEvent
 import extensions.observeAsState
 import models.Employee
+import src.EmployeeDetailedView
 import widget.ErrorView
 import widget.LoadingView
 
@@ -100,7 +100,6 @@ fun SuccessStateEmployees(
     eventHandler: (EmployeesEvent) -> Unit,
 ) {
     val expandedCardIndex = remember { mutableStateOf(-1) }
-
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 

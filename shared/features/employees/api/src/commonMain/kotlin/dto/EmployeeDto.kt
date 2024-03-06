@@ -2,7 +2,6 @@ package dto
 
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 data class EmployeeDto(
     val id: Long,
