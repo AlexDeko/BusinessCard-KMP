@@ -13,8 +13,9 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
+                implementation(libs.koin.core)
                 implementation(libs.kotlinx.coroutines.core)
-                api(project(":shared:core-compose"))
+                implementation(project(":shared:core-compose"))
             }
         }
     }

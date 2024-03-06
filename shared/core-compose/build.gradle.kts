@@ -5,6 +5,11 @@ plugins {
 
 kotlin {
     sourceSets {
+        androidMain {
+            dependencies {
+                implementation(libs.androidx.lifecycle.runtime.compose)
+            }
+        }
         commonMain {
             dependencies {
                 api(compose.runtime)

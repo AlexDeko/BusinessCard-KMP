@@ -9,10 +9,10 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":shared:core"))
-
-                api(libs.koin.core)
+                implementation(libs.koin.core)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.serialization.json)
+                implementation(libs.decompose)
             }
         }
     }

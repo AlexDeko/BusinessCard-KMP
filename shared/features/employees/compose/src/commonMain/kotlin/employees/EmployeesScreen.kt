@@ -1,6 +1,9 @@
 package employees
 
 import androidx.compose.foundation.clickable
+import EmployeeDetailedView
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,11 +33,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import animation.backAnimation
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.plus
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.scale
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
 import decompose.EmployeeListNavigator
 import decompose.MviComponent
 import decompose.State
@@ -56,8 +56,13 @@ fun EmployeeListScreen(
 
     Children(
         stack = navigator.childStackNavigation,
-        modifier = modifier,
-        animation = stackAnimation(fade() + scale()),
+        modifier = modifier.fillMaxSize(),
+        animation = backAnimation(
+            backHandler = component.backHandler,
+            onBack = {
+                component.obtainEvent(EmployeesEvent.Back)
+            },
+        ),
     ) {
         when (val child = it.instance) {
             is EmployeeListNavigator.Child.EmployeesListChild -> EmployeesView(
@@ -148,12 +153,14 @@ fun SuccessStateEmployees(
                 .padding(innerPadding)
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-            EmployeeList(employees, expandedCardIndex.value) { index ->
+            EmployeeList(employees, expandedCardIndex.value, { index ->
                 eventHandler(
                     EmployeesEvent.ClickEmployees(
                         employee = employees[index]
                     )
                 )
+            }) { index ->
+                expandedCardIndex.value = index
             }
         }
     }
@@ -163,28 +170,38 @@ fun SuccessStateEmployees(
 fun EmployeeList(
     employees: List<Employee>,
     expandedCardIndex: Int,
-    onEmployeeClick: (Int) -> Unit
+    onEmployeeClick: (Int) -> Unit,
+    onEmployeeLongClick: (Int) -> Unit
 ) {
     LazyColumn {
         items(employees) { employee ->
             EmployeeCard(
                 employees.indexOf(employee),
                 employee,
-                expandedCardIndex == employees.indexOf(employee)
-            ) {
-                onEmployeeClick(employees.indexOf(employee))
-            }
+                expandedCardIndex == employees.indexOf(employee),
+                {
+                    onEmployeeClick(employees.indexOf(employee))
+                }, {
+                    onEmployeeLongClick(employees.indexOf(employee))
+                })
         }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun EmployeeCard(position: Int, employee: Employee, isExpanded: Boolean, onCardClick: () -> Unit) {
+fun EmployeeCard(
+    position: Int,
+    employee: Employee,
+    isExpanded: Boolean,
+    onCardClick: () -> Unit,
+    onCardLongClick: () -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(20.dp, 16.dp, 20.dp, 8.dp)
-            .clickable { onCardClick() },
+            .combinedClickable(onLongClick = onCardLongClick, onClick = onCardClick),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),

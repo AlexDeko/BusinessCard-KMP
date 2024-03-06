@@ -19,19 +19,26 @@ kotlin {
             export(project(":shared:core"))
             export(project(":shared:core-utils"))
             export(libs.decompose)
-            export(libs.decompose.jetbrains.compose.extensions)
+            export(libs.essenty.stateKeeper)
             export(libs.essenty.lifecycle)
+            export(libs.essenty.backHandler)
         }
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(libs.koin.core)
+                implementation(libs.decompose)
                 implementation(project(":shared:core"))
-                api(project(":shared:core-compose"))
-
+                implementation(project(":shared:core-compose"))
+                implementation(project(":shared:features:sandbox:presentation"))
                 implementation(project(":shared:features:employees:presentation"))
+                implementation(project(":shared:features:sandbox:api"))
+                implementation(project(":shared:features:employees:api"))
                 implementation(project(":shared:features:employees:compose"))
+                implementation(project(":shared:features:sandbox:compose"))
+
             }
         }
 
@@ -40,8 +47,9 @@ kotlin {
                 api(project(":shared:core"))
                 api(project(":shared:core-utils"))
                 api(libs.decompose)
-                api(libs.decompose.jetbrains.compose.extensions)
+                api(libs.essenty.stateKeeper)
                 api(libs.essenty.lifecycle)
+                api(libs.essenty.backHandler)
             }
         }
     }

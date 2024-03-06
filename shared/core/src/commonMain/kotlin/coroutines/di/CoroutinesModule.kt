@@ -6,7 +6,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val coroutinesModule = module {
-    single {
+    factory {
         defaultCoroutineScope
     }
     single {
